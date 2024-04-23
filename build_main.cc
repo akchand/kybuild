@@ -83,7 +83,7 @@ int main() {
         // build.ninja will be closed here automatically
     }
 
-    system("ninja");
+    //system("ninja");
 
     return 0;
 }
