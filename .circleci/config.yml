@@ -16,7 +16,13 @@ jobs:
       CXX: g++-12
     steps:
       - checkout
+      - restore_cache:
+            key: my-cache
       - run: brew install gcc@12
+      - save_cache:
+          key: my-cache
+          paths:
+            - /usr/bin/gcc
       - run:
           working_directory: ~/project
           command: mkdir build
@@ -25,7 +31,7 @@ jobs:
           command: g++-12 build.cc build_main.cc -o kybuild
       - run:
           working_directory: ~/project
-          command: ./build
+          command: ./kybuild
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
