@@ -18,7 +18,7 @@ jobs:
       - checkout
       - restore_cache:
             key: my-cache
-      - run: brew install gcc@12
+      - run: brew install ninja gcc@12
       - save_cache:
           key: my-cache
           paths:
