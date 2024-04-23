@@ -2,29 +2,33 @@
 
 void build() {
 
-    target(CCBinary("cc_binary",
-                    "greet",
-                    vector<string>{"hello", "bye"},
-                    vector<string>{"greet.cc"})
+    CCBinary({      
+        .type="cc_binary",
+        .name="greet",
+        .deps={"hello", "bye"},
+        .srcs={"greet.cc"}}
     );
 
-    target(CCLibrary("cc_library",
-                     "hello",
-                     vector<string>{"hello.cc"},
-                     vector<string>{"hello.h"},
-                     vector<string>{"bye2"}));
+    CCLibrary({
+        .type="cc_library",
+        .name="hello",
+        .srcs={"hello.cc"},
+        .hdrs={"hello.h"},
+        .deps={"bye2"}});
 
-    target(CCLibrary("cc_library",
-                     "bye",
-                     vector<string>{"bye.cc"},
-                     vector<string>{"bye.h"},
-                     vector<string>{}));
+    CCLibrary({
+        .type="cc_library",
+        .name="bye",
+        .srcs={"bye.cc"},
+        .hdrs={"bye.h"},
+        .deps={}});
 
-    target(CCLibrary("cc_library",
-                     "bye2",
-                     vector<string>{"bye2.cc"},
-                     vector<string>{"bye2.h"},
-                     vector<string>{}));
+    CCLibrary({
+        .type="cc_library",
+        .name="bye2",
+        .srcs={"bye2.cc"},
+        .hdrs={"bye2.h"},
+        .deps={}});
 
 }
 

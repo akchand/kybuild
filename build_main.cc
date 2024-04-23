@@ -1,12 +1,12 @@
 #include "build.h"
 
-vector<unique_ptr<BuildTarget>> targets = {};
+std::vector<std::unique_ptr<BuildTarget>> targets = {};
 
 // Visitor interface
 class BuildVisitor {
 public:
-    virtual void visit(CCBinary& binary) = 0;
-    virtual void visit(CCLibrary& library) = 0;
+    virtual void visit(CCBinaryNode& binary) = 0;
+    virtual void visit(CCLibraryNode& library) = 0;
     virtual ~BuildVisitor() {}
 };
 
@@ -32,24 +32,24 @@ public:
         outFile.close(); // Close the output file
     }
 
-    void visit(CCBinary& binary) override {
-        outFile << "build " << binary.name << ": link ";
+    void visit(CCBinaryNode& binary) override {
+        outFile << "build " << binary.params.name << ": link ";
 
         // Iterate over each binary source and output it
-        for (const auto& src : binary.srcs) {
+        for (const auto& src : binary.params.srcs) {
             outFile << src << " ";
         }
 
-        for (const auto& dep : binary.deps) {
+        for (const auto& dep : binary.params.deps) {
             outFile << dep << ".a ";
         }
         outFile << "\n";
     }
 
-    void visit(CCLibrary& library) override {
+    void visit(CCLibraryNode& library) override {
         // std::cout << "build " << library.name << ".o: compile ";
-        outFile << "build " << library.name << ".o: compile ";
-        for (const auto& src : library.srcs) {
+        outFile << "build " << library.params.name << ".o: compile ";
+        for (const auto& src : library.params.srcs) {
             // std::cout << src << " ";
             outFile << src << " ";
         }
@@ -58,18 +58,25 @@ public:
         // std::cout << "build " << library.name << ".a: archive " << library.name << ".o\n";
         outFile << "\n";
 
-        outFile << "build " << library.name << ".a: archive " << library.name << ".o\n";
+        outFile << "build " << library.params.name << ".a: archive " << library.params.name << ".o\n";
     }
 };
 
-void CCBinary::accept(BuildVisitor& visitor) {
+void CCBinaryNode::accept(BuildVisitor& visitor) {
     visitor.visit(*this);
 }
 
-void CCLibrary::accept(BuildVisitor& visitor) {
+void CCLibraryNode::accept(BuildVisitor& visitor) {
     visitor.visit(*this);
 }
 
+void CCBinary(CCBinaryParams &&params) {
+    target(CCBinaryNode{std::move(params)});
+}
+
+void CCLibrary(CCLibraryParams &&params) {
+    target(CCLibraryNode{std::move(params)});
+}
 
 int main() {
 

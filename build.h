@@ -3,9 +3,6 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <vector>
-
-using namespace std;
 
 // Base class for build targets
 class BuildTarget {
@@ -14,41 +11,52 @@ public:
     virtual ~BuildTarget() {}
 };
 
-// Concrete class for cc_binary build target
-class CCBinary : public BuildTarget {
-public:
-    string type;
-    string name;
-    vector<string> deps;
-    vector<string> srcs;
-
-    CCBinary(const string& _type, const string& _name, const std::vector<std::string>& _deps, const std::vector<std::string>& _srcs)
-           : type(_type), name(_name), deps(_deps), srcs(_srcs) {}
-
-    void accept(BuildVisitor& visitor) override;
-};
-
-// Concrete class for cc_library build target
-class CCLibrary : public BuildTarget {
-public:
-    string type;
-    string name;
-    vector<string> srcs;
-    vector<string> hdrs;
-    vector<string> deps;
-
-    CCLibrary(const std::string& _type, const std::string& _name, const std::vector<std::string>& _srcs, const std::vector<std::string>& _hdrs, const std::vector<std::string>& _deps)
-            : type(_type), name(_name), srcs(_srcs), hdrs(_hdrs), deps(_deps)  {}
-
-    void accept(BuildVisitor& visitor) override;
-};
-
-
-extern vector<unique_ptr<BuildTarget>> targets;
-
-void build();
+extern std::vector<std::unique_ptr<BuildTarget>> targets;
 
 template<typename T>
 void target(T &&t) {
     targets.push_back(std::make_unique<T>(t));
 }
+
+class CCBinaryParams {
+    public:
+    std::string type;
+    std::string name;
+    std::vector<std::string> deps;
+    std::vector<std::string> srcs;
+};
+
+// Concrete class for cc_binary build target
+class CCBinaryNode : public BuildTarget {
+public:
+    CCBinaryNode(CCBinaryParams &&params) : params(params) {}
+    CCBinaryParams params;
+    void accept(BuildVisitor& visitor) override;
+};
+
+void CCBinary(CCBinaryParams &&params);
+
+
+class CCLibraryParams{
+public:
+    std::string type;
+    std::string name;
+    std::vector<std::string> srcs;
+    std::vector<std::string> hdrs;
+    std::vector<std::string> deps;
+};
+
+
+// Concrete class for cc_library build target
+class CCLibraryNode : public BuildTarget {
+public:
+    CCLibraryNode(CCLibraryParams &&params) : params(params) {}
+    CCLibraryParams params;
+    void accept(BuildVisitor& visitor) override;
+};
+
+void CCLibrary(CCLibraryParams &&params);
+
+void build();
+
+
