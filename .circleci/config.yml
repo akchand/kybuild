@@ -22,7 +22,7 @@ jobs:
           command: mkdir build
       - run:
           working_directory: ~/project
-          command: g++ build.cc build_main.cc -o build
+          command: g++-12 build.cc build_main.cc -o build
       - run:
           working_directory: ~/project
           command: ./build
