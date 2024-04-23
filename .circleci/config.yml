@@ -32,6 +32,9 @@ jobs:
       - run:
           working_directory: ~/project
           command: ./kybuild
+      - run:
+          working_directory: ~/project
+          command: ./greet Akhilesh
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
