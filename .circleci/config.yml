@@ -87,7 +87,7 @@ jobs:
           working_directory: ~/project
           command: |
             $env:Path = "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin;" + $env:Path
-            kybuild.exe
+            ./kybuild.exe
       - run:
           name: test project
           working_directory: ~/project
