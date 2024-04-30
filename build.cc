@@ -4,7 +4,7 @@ void build() {
 
     target(CCBinary("cc_binary",
                     "greet",
-                    vector<string>{"hello", "bye"},
+                    vector<string>{"hello", "Bye"},
                     vector<string>{"greet.cc"})
     );
 
@@ -12,18 +12,18 @@ void build() {
                      "hello",
                      vector<string>{"hello.cc"},
                      vector<string>{"hello.h"},
-                     vector<string>{"bye2"}));
+                     vector<string>{"Bye2"}));
 
     target(CCLibrary("cc_library",
-                     "bye",
-                     vector<string>{"bye.cc"},
-                     vector<string>{"bye.h"},
+                     "Bye",
+                     vector<string>{"Bye.cc"},
+                     vector<string>{"Bye.h"},
                      vector<string>{}));
 
     target(CCLibrary("cc_library",
-                     "bye2",
-                     vector<string>{"bye2.cc"},
-                     vector<string>{"bye2.h"},
+                     "Bye2",
+                     vector<string>{"Bye2.cc"},
+                     vector<string>{"Bye2.h"},
                      vector<string>{}));
 
 }
