@@ -81,19 +81,19 @@ jobs:
           working_directory: ~/project
           command: |
             $env:Path = "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin;" + $env:Path
-            g++-12 build.cc build_main.cc -o kybuild
+            g++ build.cc build_main.cc -o kybuild.exe
       - run:
           name: run project
           working_directory: ~/project
           command: |
             $env:Path = "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin;" + $env:Path
-            ./kybuild
+            kybuild.exe
       - run:
           name: test project
           working_directory: ~/project
           command: |
             $env:Path = "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin;" + $env:Path
-            ./greet Akhilesh
+            greet.exe Akhilesh
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
