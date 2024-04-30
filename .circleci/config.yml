@@ -4,10 +4,37 @@ version: 2.1
 
 orbs:
   macos: circleci/macos@2.2.0
+  win: circleci/windows@4.1.1
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
+  linux-gcc:
+    docker:
+      - image: cimg/base:2023.08
+    environment:
+      CC: gcc-12
+      CXX: g++-12
+    steps:
+      - checkout
+      - run:
+          name: Install Software
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y python3-pip ninja-build g++-12
+      - run:
+          working_directory: ~/project
+          command: mkdir build
+      - run:
+          working_directory: ~/project
+          command: g++-12 build.cc build_main.cc -o kybuild
+      - run:
+          working_directory: ~/project
+          command: ./kybuild
+      - run:
+          working_directory: ~/project
+          command: ./greet Akhilesh
+
   mac-gcc:
     macos:
       xcode: 13.4.1
@@ -36,9 +63,43 @@ jobs:
           working_directory: ~/project
           command: ./greet Akhilesh
 
+  windows:
+    executor: win/server-2022
+    steps:
+      - checkout
+      - run:
+          name: Install mingw
+          command: choco install -y mingw
+      - run:
+          name: Install ninja
+          command: choco install -y ninja
+      - run:
+          working_directory: ~/project
+          command: mkdir build
+      - run:
+          name: Build project
+          working_directory: ~/project
+          command: |
+            $env:Path = "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin;" + $env:Path
+            g++-12 build.cc build_main.cc -o kybuild
+      - run:
+          name: run project
+          working_directory: ~/project
+          command: |
+            $env:Path = "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin;" + $env:Path
+            ./kybuild
+      - run:
+          name: test project
+          working_directory: ~/project
+          command: |
+            $env:Path = "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin;" + $env:Path
+            ./greet Akhilesh
+
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
   build-workflow:
     jobs:
+      - linux-gcc
       - mac-gcc
+      - windows
