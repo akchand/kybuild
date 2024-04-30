@@ -5,7 +5,7 @@ void build() {
     CCBinary({      
         .type="cc_binary",
         .name="greet",
-        .deps={"hello", "bye"},
+        .deps={"hello", "Bye"},
         .srcs={"greet.cc"}}
     );
 
@@ -14,20 +14,20 @@ void build() {
         .name="hello",
         .srcs={"hello.cc"},
         .hdrs={"hello.h"},
-        .deps={"bye2"}});
+        .deps={"Bye2"}});
 
     CCLibrary({
         .type="cc_library",
-        .name="bye",
-        .srcs={"bye.cc"},
-        .hdrs={"bye.h"},
+        .name="Bye",
+        .srcs={"Bye.cc"},
+        .hdrs={"Bye.h"},
         .deps={}});
 
     CCLibrary({
         .type="cc_library",
-        .name="bye2",
-        .srcs={"bye2.cc"},
-        .hdrs={"bye2.h"},
+        .name="Bye2",
+        .srcs={"Bye2.cc"},
+        .hdrs={"Bye2.h"},
         .deps={}});
 
 }
