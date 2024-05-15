@@ -1,0 +1,14 @@
+rule compile
+  command = g++-12 -c $in -o $out
+
+rule archive
+  command = ar rcs $out $in
+
+rule link
+  command = g++ $in -o $out
+build minlz_obj.o: compile inputbuf.c dictbuf.c lzma2dec.c lzmadec.c rangedec.c xzcrc.c xzstream.c 
+build minlz_obj.a: archive minlz_obj.o
+build minlzlib.o: compile inputbuf.c dictbuf.c lzma2dec.c lzmadec.c rangedec.c xzcrc.c xzstream.c 
+build minlzlib.a: archive minlzlib.o
+build minlz.o: compile inputbuf.c dictbuf.c lzma2dec.c lzmadec.c rangedec.c xzcrc.c xzstream.c 
+build minlz.a: archive minlz.o

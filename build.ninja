@@ -1,0 +1,15 @@
+rule compile
+  command = g++ -c $in -o $out
+
+rule archive
+  command = ar rcs $out $in
+
+rule link
+  command = g++ $in -o $out
+build greet: link greet.cc hello.a Bye.a 
+build hello.o: compile hello.cc 
+build hello.a: archive hello.o
+build Bye.o: compile Bye.cc 
+build Bye.a: archive Bye.o
+build Bye2.o: compile Bye2.cc 
+build Bye2.a: archive Bye2.o

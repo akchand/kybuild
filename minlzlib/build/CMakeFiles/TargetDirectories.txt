@@ -1,0 +1,5 @@
+/Users/harsh/Desktop/NYU/KyBuild_Project/minlzma/minlzlib/build/CMakeFiles/minlz_obj.dir
+/Users/harsh/Desktop/NYU/KyBuild_Project/minlzma/minlzlib/build/CMakeFiles/minlzlib.dir
+/Users/harsh/Desktop/NYU/KyBuild_Project/minlzma/minlzlib/build/CMakeFiles/minlz.dir
+/Users/harsh/Desktop/NYU/KyBuild_Project/minlzma/minlzlib/build/CMakeFiles/edit_cache.dir
+/Users/harsh/Desktop/NYU/KyBuild_Project/minlzma/minlzlib/build/CMakeFiles/rebuild_cache.dir

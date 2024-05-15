@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libminlzlib.a CMakeFiles/minlzlib.dir/inputbuf.o CMakeFiles/minlzlib.dir/dictbuf.o CMakeFiles/minlzlib.dir/lzma2dec.o CMakeFiles/minlzlib.dir/lzmadec.o CMakeFiles/minlzlib.dir/rangedec.o CMakeFiles/minlzlib.dir/xzcrc.o CMakeFiles/minlzlib.dir/xzstream.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libminlzlib.a
