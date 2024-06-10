@@ -26,6 +26,7 @@ public:
         outFile << "\n";
         outFile << "rule link\n";
         outFile << "  command = g++ $in -o $out\n";
+        outFile << "\n";
     }
 
     ~NinjaGenerator() {
@@ -48,17 +49,18 @@ public:
 
     void visit(CCLibraryNode& library) override {
         // std::cout << "build " << library.name << ".o: compile ";
-        outFile << "build " << library.params.name << ".o: compile ";
+        //outFile << "build " << library.params.name << ".o: compile ";
         for (const auto& src : library.params.srcs) {
             // std::cout << src << " ";
-            outFile << src << " ";
+            outFile << "build " << src.substr(0,src.length() - 2) << ".o: compile "<< src << "\n";
+            //outFile << src << " ";
         }
         // std::cout << "\n";
 
         // std::cout << "build " << library.name << ".a: archive " << library.name << ".o\n";
-        outFile << "\n";
+        //outFile << "\n";
 
-        outFile << "build " << library.params.name << ".a: archive " << library.params.name << ".o\n";
+        //outFile << "build " << library.params.name << ".a: archive " << library.params.name << ".o\n";
     }
 };
 
